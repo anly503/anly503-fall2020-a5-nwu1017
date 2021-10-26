@@ -1,0 +1,16 @@
+name: "ANLY503 Assignment 5"
+output_dir: "docs"
+navbar:
+  title: "ANLY503 Assignment 5"
+  left:
+    - text: "Data"
+      href: index.html
+    - text: "Visualization"
+      href: about.html
+mainfont: LiberationSerif
+sansfont: LiberationSans
+monofont: LiberationMono
+output:
+  html_document:
+    theme:leonids
+    highlight:textmate

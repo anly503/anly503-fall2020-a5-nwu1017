@@ -1,0 +1,18 @@
+---
+title: "Which holiday is more 'energy consuming'?"
+subtitle: "Christmas or New Year??"
+---
+
+#### We all love $\color{red}{\text{the holiday season}}$. It's the time for family reunion, exchange of gifts and maybe greeting by the Santa Claus? 
+
+#### However, energy consumption could also climb high during the holiday season. Is there any difference between energy consumption for Christmas vs New Year? How does the energy consumption differ from household to household?  
+
+#### This project aims to explore the overall energy consumption at the household level. The granular data would provide interesting insights on the energy consumption during the holidays. 
+
+* Data: A subset of the Electricty Consumption and Occupancy (ECO) dataset will be used for this analysis. Data from two households (Household 4 and 5) are available for the chosen dates, compromising power consumption overall and particular plugs/appliances per second. 
+
+* Rationale: The project is trying to balance between granularity and key messages. Often times, individuals won't think about energy consumption for a given holiday. Having detailed information on household consumption allowed us to explore the changes of consumption levels. The original dataset was presented by seconds. While it is very granular, we also need to balance the key messages to be conveyed. Showcasing the changes of consumption levels by *the hour* would make the graph less chaotic and easy to extract the information for non-technical readers.  
+
+
+
+
