@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Data Visualization</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ANLY503 Assignment 5</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Data</a>
+</li>
+<li>
+  <a href="about.html">Visualization</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Data Visualization</h1>
+
+</div>
+
+
+<div id="htmlwidget-0ffc4dcccf7a4a9a8252" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0ffc4dcccf7a4a9a8252">{"x":{"data":[{"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24],"y":[4317750.445,2448348.994,4911926.052,1105850.369,1185038.226,954200.123,1292986.756,3811296.564,2084742.678,4058398.778,3345477.1,1731290.613,1739361.232,1877491.028,1809970.86,1705561.445,2379356.048,7042082.106,3092055.867,3440874.613,3168856.391,2712018.247,1695147.528,11791645.105],"text":["hour:  1<br />sum:  4317750.4<br />as.factor(date): 2012-12-25","hour:  2<br />sum:  2448349.0<br />as.factor(date): 2012-12-25","hour:  3<br />sum:  4911926.1<br />as.factor(date): 2012-12-25","hour:  4<br />sum:  1105850.4<br />as.factor(date): 2012-12-25","hour:  5<br />sum:  1185038.2<br />as.factor(date): 2012-12-25","hour:  6<br />sum:   954200.1<br />as.factor(date): 2012-12-25","hour:  7<br />sum:  1292986.8<br />as.factor(date): 2012-12-25","hour:  8<br />sum:  3811296.6<br />as.factor(date): 2012-12-25","hour:  9<br />sum:  2084742.7<br />as.factor(date): 2012-12-25","hour: 10<br />sum:  4058398.8<br />as.factor(date): 2012-12-25","hour: 11<br />sum:  3345477.1<br />as.factor(date): 2012-12-25","hour: 12<br />sum:  1731290.6<br />as.factor(date): 2012-12-25","hour: 13<br />sum:  1739361.2<br />as.factor(date): 2012-12-25","hour: 14<br />sum:  1877491.0<br />as.factor(date): 2012-12-25","hour: 15<br />sum:  1809970.9<br />as.factor(date): 2012-12-25","hour: 16<br />sum:  1705561.4<br />as.factor(date): 2012-12-25","hour: 17<br />sum:  2379356.0<br />as.factor(date): 2012-12-25","hour: 18<br />sum:  7042082.1<br />as.factor(date): 2012-12-25","hour: 19<br />sum:  3092055.9<br />as.factor(date): 2012-12-25","hour: 20<br />sum:  3440874.6<br />as.factor(date): 2012-12-25","hour: 21<br />sum:  3168856.4<br />as.factor(date): 2012-12-25","hour: 22<br />sum:  2712018.2<br />as.factor(date): 2012-12-25","hour: 23<br />sum:  1695147.5<br />as.factor(date): 2012-12-25","hour: 24<br />sum: 11791645.1<br />as.factor(date): 2012-12-25"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(255,0,0,1)","dash":"solid"},"hoveron":"points","name":"2012-12-25","legendgroup":"2012-12-25","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24],"y":[10423327.235,5950280.389,827031.405,813204.434,833778.988,714937.092,1328042.867,3303506.336,1915329.545,1780802.128,1407052.932,1870255.017,2433195.8,2381079.873,1630370.463,1798405.86,5201219.712,6233911.534,5828252.165,5821010.061,3355586.275,2755805.236,1887935.844,12240759.935],"text":["hour:  1<br />sum: 10423327.2<br />as.factor(date): 2013-01-01","hour:  2<br />sum:  5950280.4<br />as.factor(date): 2013-01-01","hour:  3<br />sum:   827031.4<br />as.factor(date): 2013-01-01","hour:  4<br />sum:   813204.4<br />as.factor(date): 2013-01-01","hour:  5<br />sum:   833779.0<br />as.factor(date): 2013-01-01","hour:  6<br />sum:   714937.1<br />as.factor(date): 2013-01-01","hour:  7<br />sum:  1328042.9<br />as.factor(date): 2013-01-01","hour:  8<br />sum:  3303506.3<br />as.factor(date): 2013-01-01","hour:  9<br />sum:  1915329.5<br />as.factor(date): 2013-01-01","hour: 10<br />sum:  1780802.1<br />as.factor(date): 2013-01-01","hour: 11<br />sum:  1407052.9<br />as.factor(date): 2013-01-01","hour: 12<br />sum:  1870255.0<br />as.factor(date): 2013-01-01","hour: 13<br />sum:  2433195.8<br />as.factor(date): 2013-01-01","hour: 14<br />sum:  2381079.9<br />as.factor(date): 2013-01-01","hour: 15<br />sum:  1630370.5<br />as.factor(date): 2013-01-01","hour: 16<br />sum:  1798405.9<br />as.factor(date): 2013-01-01","hour: 17<br />sum:  5201219.7<br />as.factor(date): 2013-01-01","hour: 18<br />sum:  6233911.5<br />as.factor(date): 2013-01-01","hour: 19<br />sum:  5828252.2<br />as.factor(date): 2013-01-01","hour: 20<br />sum:  5821010.1<br />as.factor(date): 2013-01-01","hour: 21<br />sum:  3355586.3<br />as.factor(date): 2013-01-01","hour: 22<br />sum:  2755805.2<br />as.factor(date): 2013-01-01","hour: 23<br />sum:  1887935.8<br />as.factor(date): 2013-01-01","hour: 24<br />sum: 12240759.9<br />as.factor(date): 2013-01-01"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(173,216,230,1)","dash":"solid"},"hoveron":"points","name":"2013-01-01","legendgroup":"2013-01-01","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":45.7550850975509,"r":7.97011207970112,"b":40.381901203819,"l":73.0593607305936},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"sans","size":15.9402241594022},"title":{"text":"<b> Total Energy Consumption by Household No.5 <\/b>","font":{"color":"rgba(0,0,0,1)","family":"sans","size":18.5969281859693},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.15,25.15],"tickmode":"array","ticktext":["0","5","10","15","20","25"],"tickvals":[0,5,10,15,20,25],"categoryorder":"array","categoryarray":["0","5","10","15","20","25"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.98505603985056,"tickwidth":0.724555643609193,"showticklabels":true,"tickfont":{"color":"rgba(0,0,0,1)","family":"sans","size":11.9551681195517},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"Hour of the Day","font":{"color":"rgba(0,0,0,1)","family":"sans","size":13.2835201328352}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[138645.94985,12817051.07715],"tickmode":"array","ticktext":["2500000","5000000","7500000","10000000","12500000"],"tickvals":[2500000,5000000,7500000,10000000,12500000],"categoryorder":"array","categoryarray":["2500000","5000000","7500000","10000000","12500000"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.98505603985056,"tickwidth":0.724555643609193,"showticklabels":true,"tickfont":{"color":"rgba(0,0,0,1)","family":"sans","size":11.9551681195517},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":true,"gridcolor":"rgba(190,190,190,1)","gridwidth":0.724555643609193,"zeroline":false,"anchor":"x","title":{"text":"Smart Meters Value","font":{"color":"rgba(0,0,0,1)","family":"sans","size":13.2835201328352}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"rgba(0,0,0,1)","borderwidth":2.06156048675734,"font":{"color":"rgba(0,0,0,1)","family":"sans","size":14.6118721461187},"title":{"text":"Occasion","font":{"color":"rgba(0,0,0,1)","family":"sans","size":15.9402241594022}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"23842399e379":{"x":{},"y":{},"colour":{},"type":"scatter"}},"cur_data":"23842399e379","visdat":{"23842399e379":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="colorbluetextdesign-rationale-a-line-chart-is-helpful-to-visualize-the-energy-consumption-by-the-hour.-from-the-graph-we-can-see-that-this-households-energy-consumption-is-quite-similar-for-christmas-and-new-year.-the-peak-hours-include-the-hour-after-the-new-year-as-well-as-the-nights-of-chritsmas-and-new-year.-we-also-see-a-small-peak-around-the-dinner-time-6pm." class="section level4">
+<h4><span class="math inline">\(\color{blue}{\text{Design Rationale}}\)</span>: A line chart is helpful to visualize the energy consumption by the hour. From the graph, we can see that this household’s energy consumption is quite similar for Christmas and New Year. The peak hours include the hour after the new year as well as the nights of Chritsmas and New Year. We also see a small peak around the dinner time (6pm).</h4>
+<div id="htmlwidget-3e19f969ed098e12f7e9" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3e19f969ed098e12f7e9">{"x":{"data":[{"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24],"y":[2163881.434,2121174.07,2064181.119,2156494.97,1931142.608,2268039.54,2151166.134,2732402.207,2348506.226,1853977.003,1780246.406,1823114.887,3720628.753,1895410.1,2012776.311,1789871.566,2396169.03,2568483.021,2928770.27,3219960.618,2939272.101,2966729.111,3290719.356,2504095.792],"text":["hour:  1<br />sum: 2163881.4<br />as.factor(date): 2012-12-25","hour:  2<br />sum: 2121174.1<br />as.factor(date): 2012-12-25","hour:  3<br />sum: 2064181.1<br />as.factor(date): 2012-12-25","hour:  4<br />sum: 2156495.0<br />as.factor(date): 2012-12-25","hour:  5<br />sum: 1931142.6<br />as.factor(date): 2012-12-25","hour:  6<br />sum: 2268039.5<br />as.factor(date): 2012-12-25","hour:  7<br />sum: 2151166.1<br />as.factor(date): 2012-12-25","hour:  8<br />sum: 2732402.2<br />as.factor(date): 2012-12-25","hour:  9<br />sum: 2348506.2<br />as.factor(date): 2012-12-25","hour: 10<br />sum: 1853977.0<br />as.factor(date): 2012-12-25","hour: 11<br />sum: 1780246.4<br />as.factor(date): 2012-12-25","hour: 12<br />sum: 1823114.9<br />as.factor(date): 2012-12-25","hour: 13<br />sum: 3720628.8<br />as.factor(date): 2012-12-25","hour: 14<br />sum: 1895410.1<br />as.factor(date): 2012-12-25","hour: 15<br />sum: 2012776.3<br />as.factor(date): 2012-12-25","hour: 16<br />sum: 1789871.6<br />as.factor(date): 2012-12-25","hour: 17<br />sum: 2396169.0<br />as.factor(date): 2012-12-25","hour: 18<br />sum: 2568483.0<br />as.factor(date): 2012-12-25","hour: 19<br />sum: 2928770.3<br />as.factor(date): 2012-12-25","hour: 20<br />sum: 3219960.6<br />as.factor(date): 2012-12-25","hour: 21<br />sum: 2939272.1<br />as.factor(date): 2012-12-25","hour: 22<br />sum: 2966729.1<br />as.factor(date): 2012-12-25","hour: 23<br />sum: 3290719.4<br />as.factor(date): 2012-12-25","hour: 24<br />sum: 2504095.8<br />as.factor(date): 2012-12-25"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(255,0,0,1)","dash":"solid"},"hoveron":"points","name":"2012-12-25","legendgroup":"2012-12-25","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24],"y":[1307153.046,1263197.695,790895.016,1071213.604,859823.195,981932.041,1032974.696,967734.951,1046506.564,1456803.245,1158518.846,3718268.688,2174418.044,1524485.488,2475685.375,1406259.22,1858253.499,2361774.582,3049194.038,2370964.442,2472578.801,2356962.732,2131193.117,1195802.655],"text":["hour:  1<br />sum: 1307153.0<br />as.factor(date): 2013-01-01","hour:  2<br />sum: 1263197.7<br />as.factor(date): 2013-01-01","hour:  3<br />sum:  790895.0<br />as.factor(date): 2013-01-01","hour:  4<br />sum: 1071213.6<br />as.factor(date): 2013-01-01","hour:  5<br />sum:  859823.2<br />as.factor(date): 2013-01-01","hour:  6<br />sum:  981932.0<br />as.factor(date): 2013-01-01","hour:  7<br />sum: 1032974.7<br />as.factor(date): 2013-01-01","hour:  8<br />sum:  967735.0<br />as.factor(date): 2013-01-01","hour:  9<br />sum: 1046506.6<br />as.factor(date): 2013-01-01","hour: 10<br />sum: 1456803.2<br />as.factor(date): 2013-01-01","hour: 11<br />sum: 1158518.8<br />as.factor(date): 2013-01-01","hour: 12<br />sum: 3718268.7<br />as.factor(date): 2013-01-01","hour: 13<br />sum: 2174418.0<br />as.factor(date): 2013-01-01","hour: 14<br />sum: 1524485.5<br />as.factor(date): 2013-01-01","hour: 15<br />sum: 2475685.4<br />as.factor(date): 2013-01-01","hour: 16<br />sum: 1406259.2<br />as.factor(date): 2013-01-01","hour: 17<br />sum: 1858253.5<br />as.factor(date): 2013-01-01","hour: 18<br />sum: 2361774.6<br />as.factor(date): 2013-01-01","hour: 19<br />sum: 3049194.0<br />as.factor(date): 2013-01-01","hour: 20<br />sum: 2370964.4<br />as.factor(date): 2013-01-01","hour: 21<br />sum: 2472578.8<br />as.factor(date): 2013-01-01","hour: 22<br />sum: 2356962.7<br />as.factor(date): 2013-01-01","hour: 23<br />sum: 2131193.1<br />as.factor(date): 2013-01-01","hour: 24<br />sum: 1195802.7<br />as.factor(date): 2013-01-01"],"type":"scatter","mode":"lines","line":{"width":1.88976377952756,"color":"rgba(173,216,230,1)","dash":"solid"},"hoveron":"points","name":"2013-01-01","legendgroup":"2013-01-01","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":45.7550850975509,"r":7.97011207970112,"b":40.381901203819,"l":55.1266085512661},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"sans","size":15.9402241594022},"title":{"text":"<b> Total Energy Consumption by Household No.4 <\/b>","font":{"color":"rgba(0,0,0,1)","family":"sans","size":18.5969281859693},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.15,25.15],"tickmode":"array","ticktext":["0","5","10","15","20","25"],"tickvals":[0,5,10,15,20,25],"categoryorder":"array","categoryarray":["0","5","10","15","20","25"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.98505603985056,"tickwidth":0.724555643609193,"showticklabels":true,"tickfont":{"color":"rgba(0,0,0,1)","family":"sans","size":11.9551681195517},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"Hour of the Day","font":{"color":"rgba(0,0,0,1)","family":"sans","size":13.2835201328352}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[644408.32915,3867115.43985],"tickmode":"array","ticktext":["1e+06","2e+06","3e+06"],"tickvals":[1000000,2000000,3000000],"categoryorder":"array","categoryarray":["1e+06","2e+06","3e+06"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.98505603985056,"tickwidth":0.724555643609193,"showticklabels":true,"tickfont":{"color":"rgba(0,0,0,1)","family":"sans","size":11.9551681195517},"tickangle":-0,"showline":true,"linecolor":"rgba(0,0,0,1)","linewidth":0.66417600664176,"showgrid":true,"gridcolor":"rgba(190,190,190,1)","gridwidth":0.724555643609193,"zeroline":false,"anchor":"x","title":{"text":"Smart Meters Value","font":{"color":"rgba(0,0,0,1)","family":"sans","size":13.2835201328352}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"rgba(0,0,0,1)","borderwidth":2.06156048675734,"font":{"color":"rgba(0,0,0,1)","family":"sans","size":14.6118721461187},"title":{"text":"Occasion","font":{"color":"rgba(0,0,0,1)","family":"sans","size":15.9402241594022}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"23845cca13ea":{"x":{},"y":{},"colour":{},"type":"scatter"}},"cur_data":"23845cca13ea","visdat":{"23845cca13ea":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="colorbluetextdesign-rationale-the-energy-consumption-for-this-household-is-quite-different.-both-peaked-during-lunch-hours-noon-or-1pm.-however-the-level-of-energy-consumption-is-significantly-lower-for-new-year-than-christmas.-it-could-be-that-some-members-of-the-households-were-travelling-for-the-new-year-or-more-activities-were-happening-during-the-christmas-day." class="section level4">
+<h4><span class="math inline">\(\color{blue}{\text{Design Rationale}}\)</span>: The energy consumption for this household is quite different. Both peaked during lunch hours (noon or 1pm). However, the level of energy consumption is significantly lower for New Year than Christmas. It could be that some members of the households were travelling for the New Year or more activities were happening during the Christmas Day.</h4>
+</div>
+<div id="r-software-kept-shutting-down-when-loading-the-altair-package.-therefore-below-is-the-altair-graphic-procuded-via-python." class="section level4">
+<h4>R software kept shutting down when loading the “Altair Package”. Therefore, Below is the Altair graphic procuded via Python.</h4>
+<div class="figure">
+<img src="visualization.png" alt="Energy Consumption for Household No.4" width="30%" />
+<p class="caption">
+Energy Consumption for Household No.4
+</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
